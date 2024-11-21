@@ -8,11 +8,12 @@ import {
   Globe, 
   CheckCircle 
 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 
 import Navbar from '../components/Navbar';
+import Footer from '../components/Footer';
 import FeaturesSection from '../components/FeaturesSection';
 
 const LandingPage = () => {
@@ -33,6 +34,7 @@ const LandingPage = () => {
       />
       <FeaturesSection />
       <JoinSection onLogin={login} />
+      <Footer />
     </div>
   );
 };
@@ -81,13 +83,15 @@ const HeroSection = ({ onLogin, onExplore, onDiscoverMore }) => (
           transition={{ duration: 0.6, delay: 0.4 }}
           className="flex flex-col md:flex-row justify-center space-y-4 md:space-y-0 md:space-x-4"
         >
-          <button
-            onClick={onLogin}
-            className="w-full md:w-auto px-8 py-4 bg-blue-600 text-white rounded-xl 
-            hover:bg-blue-700 transition-all transform hover:scale-105 flex items-center justify-center"
-          >
-            <Code className="mr-2" /> Start Coding
-          </button>
+          <NavLink
+             to="/code-editor"
+             className="w-full md:w-auto px-8 py-4 bg-blue-600 text-white rounded-xl 
+             hover:bg-blue-700 transition-all transform hover:scale-105 
+             flex items-center justify-center"
+             >
+             <Code className="mr-2" />
+                Start Coding
+               </NavLink>
           
           <button
             onClick={onExplore}
@@ -141,8 +145,14 @@ const JoinSection = ({ onLogin }) => (
       >
         Join CodeLab Now
       </motion.button>
+
+        
+
     </div>
   </motion.div>
+
+
+
 );
 
 export default LandingPage;

@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext';
 import ErrorPage from './pages/ErrorPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import TeamPage from './pages/TeamPage';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/subjects" element={<SubjectsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Register" element={<Register />} />
+          <Route path="/TeamPage" element={<TeamPage />} />
           
           <Route path="*" element={<ErrorPage />} />
         </Routes>
