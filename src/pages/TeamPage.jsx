@@ -43,8 +43,9 @@ const TeamPage = () => {
       icon: <Briefcase className="w-8 h-8 text-red-600" />,
       members: [
         'Krinal Sorathiya',
+        'Meet kumar',
         'Aayush Thakker', 
-        'Danesh Choudhary'
+        'Danesh '
       ]
     }
   ];
