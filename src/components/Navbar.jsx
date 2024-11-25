@@ -104,14 +104,14 @@ const DesktopNavigation = ({ navLinks, user, onLogin, onSignup, onLogout }) => (
             onClick={onLogin}
             className="text-gray-600 hover:text-blue-600 font-medium"
           >
-            Sign In
+            join us
           </button>
-          <button
+          {/* <button
             onClick={onSignup}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Sign Up
-          </button>
+          </button> */}
         </>
       )}
     </div>
@@ -157,14 +157,14 @@ const MobileMenu = ({ navLinks, user, onLogin, onSignup, onNavigate, onLogout })
             onClick={onLogin}
             className="text-gray-600 hover:text-blue-600 font-medium text-left"
           >
-            Sign In
+            join us
           </button>
-          <button
+          {/* <button
             onClick={onSignup}
             className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
           >
             Sign Up
-          </button>
+          </button> */}
         </>
       )}
     </div>

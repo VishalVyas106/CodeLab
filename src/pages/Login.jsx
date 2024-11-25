@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { doSignInWithGoogle } from '../firebase/auth';
 import { useAuth } from '../context/AuthContext';
+import Navbar from '../components/Navbar';
 
 const Login = () => {
     const { userLoggedIn } = useAuth();
@@ -23,8 +24,11 @@ const Login = () => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-blue-900 via-gray-900 to-black">
-            {userLoggedIn && <Navigate to="/Home" replace={true} />}
+            {userLoggedIn && <Navigate to="/" replace={true} />}
             
+            <Navbar />
+
+
             <div className="min-h-screen flex items-center justify-center p-4">
                 <div className="w-full max-w-6xl flex rounded-2xl shadow-2xl overflow-hidden bg-gray-900/50 backdrop-blur-sm">
                     {/* Left Side Content */}
