@@ -1,13 +1,14 @@
-// Frontend Structure (React + Tailwind CSS)
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './pages/LandingPage';
 import SubjectsPage from './pages/SubjectsPage';
-import { AuthProvider } from './context/AuthContext';
-import ErrorPage from './pages/ErrorPage';
+import TeamPage from './pages/TeamPage';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import TeamPage from './pages/TeamPage';
+import AdminDashboard from './pages/AdminDashboard';
+import ErrorPage from './pages/ErrorPage';
 
 function App() {
   return (
@@ -15,10 +16,32 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/subjects" element={<SubjectsPage />} />
           <Route path="/login" element={<Login />} />
-          <Route path="/Register" element={<Register />} />
-          <Route path="/TeamPage" element={<TeamPage />} />
+          <Route path="/register" element={<Register />} />
+          
+          {/* Protected Routes */}
+          <Route 
+            path="/subjects" 
+            element={
+              <ProtectedRoute>
+                <SubjectsPage />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/team" 
+            element={
+              <ProtectedRoute>
+                <TeamPage />
+              </ProtectedRoute>
+            } 
+          />
+          
+          {/* Admin Routes */}
+          <Route 
+            path="/kakashi106vyasvishalisbigfanofnarutoandblech97262705539913972939" 
+            element={ <AdminDashboard /> } and 
+          />
           
           <Route path="*" element={<ErrorPage />} />
         </Routes>
@@ -28,5 +51,3 @@ function App() {
 }
 
 export default App;
-
-

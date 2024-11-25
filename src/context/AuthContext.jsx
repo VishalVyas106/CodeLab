@@ -1,48 +1,63 @@
+import React, { useContext, useState, useEffect } from "react";
+import { auth } from "../firebase/firebase";
+// import { GoogleAuthProvider } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
 
-// src/context/AuthContext.jsx
-import React, { createContext, useState, useContext, useEffect } from 'react';
-import api from '../api/axios';
+const AuthContext = React.createContext();
 
-const AuthContext = createContext(null);
+export function useAuth() {
+  return useContext(AuthContext);
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+export function AuthProvider({ children }) {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [userLoggedIn, setUserLoggedIn] = useState(false);
+  const [isEmailUser, setIsEmailUser] = useState(false);
+  const [isGoogleUser, setIsGoogleUser] = useState(false);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (token) {
-      api.get('/users/profile')
-        .then(res => setUser(res.data))
-        .catch(() => localStorage.removeItem('token'))
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
-    }
+    const unsubscribe = onAuthStateChanged(auth, initializeUser);
+    return unsubscribe;
   }, []);
 
-  const login = async (credentials) => {
-    const res = await api.post('/users/signin', credentials);
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.user);
-  };
+  async function initializeUser(user) {
+    if (user) {
 
-  const register = async (userData) => {
-    const res = await api.post('/users/signup', userData);
-    localStorage.setItem('token', res.data.token);
-    setUser(res.data.user);
-  };
+      setCurrentUser({ ...user });
 
-  const logout = () => {
-    localStorage.removeItem('token');
-    setUser(null);
+      // check if provider is email and password login
+      const isEmail = user.providerData.some(
+        (provider) => provider.providerId === "password"
+      );
+      setIsEmailUser(isEmail);
+
+      // check if the auth provider is google or not
+    //   const isGoogle = user.providerData.some(
+    //     (provider) => provider.providerId === GoogleAuthProvider.PROVIDER_ID
+    //   );
+    //   setIsGoogleUser(isGoogle);
+
+      setUserLoggedIn(true);
+    } else {
+      setCurrentUser(null);
+      setUserLoggedIn(false);
+    }
+
+    setLoading(false);
+  }
+
+  const value = {
+    userLoggedIn,
+    isEmailUser,
+    isGoogleUser,
+    currentUser,
+    setCurrentUser
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, register, logout, loading }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
-};
-
-export const useAuth = () => useContext(AuthContext);
+}

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { Code, Menu, X } from 'lucide-react';
+import { Code, Menu, X, User, LogOut } from 'lucide-react';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -14,6 +14,7 @@ const navLinks = [
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { user, logout } = useAuth();
 
   const toggleMobileMenu = () => setIsOpen((prev) => !prev);
 
@@ -22,24 +23,34 @@ const Navbar = () => {
     setIsOpen(false);
   };
 
+  const handleLogout = () => {
+    logout();
+    navigate('/');
+    setIsOpen(false);
+  };
+
   return (
     <nav className="fixed w-full z-50 bg-white/90 backdrop-blur-sm shadow-sm">
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <BrandLogo />
-          <DesktopNavigation 
-            navLinks={navLinks} 
-            onLogin={() => navigate('/login')} 
-            onSignup={() => navigate('/register')} 
+          <DesktopNavigation
+            navLinks={navLinks}
+            user={user}
+            onLogin={() => navigate('/login')}
+            onSignup={() => navigate('/register')}
+            onLogout={handleLogout}
           />
           <MobileMenuToggle isOpen={isOpen} onToggle={toggleMobileMenu} />
         </div>
         {isOpen && (
-          <MobileMenu 
-            navLinks={navLinks} 
-            onLogin={() => navigate('/login')} 
-            onSignup={() => navigate('/register')} 
-            onNavigate={handleNavigation} 
+          <MobileMenu
+            navLinks={navLinks}
+            user={user}
+            onLogin={() => navigate('/login')}
+            onSignup={() => navigate('/register')}
+            onNavigate={handleNavigation}
+            onLogout={handleLogout}
           />
         )}
       </div>
@@ -54,7 +65,7 @@ const BrandLogo = () => (
   </div>
 );
 
-const DesktopNavigation = ({ navLinks, onLogin, onSignup }) => (
+const DesktopNavigation = ({ navLinks, user, onLogin, onSignup, onLogout }) => (
   <div className="hidden md:flex items-center space-x-8">
     {navLinks.map((link) => (
       <a
@@ -66,18 +77,43 @@ const DesktopNavigation = ({ navLinks, onLogin, onSignup }) => (
       </a>
     ))}
     <div className="flex items-center space-x-4">
-      <button
-        onClick={onLogin}
-        className="text-gray-600 hover:text-blue-600 font-medium"
-      >
-        Sign In
-      </button>
-      <button
-        onClick={onSignup}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-      >
-        Sign Up
-      </button>
+      {user ? (
+        <>
+          <div className="flex items-center space-x-3 p-2 bg-white border rounded-lg shadow-sm hover:shadow-md transition">
+  <div className="flex items-center justify-center w-9 h-9 rounded-full bg-gray-100">
+    <User className="h-5 w-5 text-gray-500" />
+  </div>
+  <span className="text-gray-800 font-medium truncate" title={user.name}>
+    {user.name}
+  </span>
+</div>
+
+
+
+          <button
+            onClick={onLogout}
+            className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium"
+          >
+            <LogOut className="h-5 w-5" />
+            <span>Logout</span>
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            onClick={onLogin}
+            className="text-gray-600 hover:text-blue-600 font-medium"
+          >
+            Sign In
+          </button>
+          <button
+            onClick={onSignup}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            Sign Up
+          </button>
+        </>
+      )}
     </div>
   </div>
 );
@@ -88,7 +124,7 @@ const MobileMenuToggle = ({ isOpen, onToggle }) => (
   </button>
 );
 
-const MobileMenu = ({ navLinks, onLogin, onSignup, onNavigate }) => (
+const MobileMenu = ({ navLinks, user, onLogin, onSignup, onNavigate, onLogout }) => (
   <div className="md:hidden py-4">
     <div className="flex flex-col space-y-4">
       {navLinks.map((link) => (
@@ -101,18 +137,36 @@ const MobileMenu = ({ navLinks, onLogin, onSignup, onNavigate }) => (
         </button>
       ))}
       <hr className="border-gray-200" />
-      <button
-        onClick={onLogin}
-        className="text-gray-600 hover:text-blue-600 font-medium text-left"
-      >
-        Sign In
-      </button>
-      <button
-        onClick={onSignup}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
-      >
-        Sign Up
-      </button>
+      {user ? (
+        <>
+          <div className="flex items-center space-x-2">
+            <User className="h-5 w-5 text-gray-600" />
+            <span className="text-gray-600 font-medium">{user.name}</span>
+          </div>
+          <button
+            onClick={onLogout}
+            className="flex items-center space-x-2 text-gray-600 hover:text-blue-600 font-medium"
+          >
+            <LogOut className="h-5 w-5" />
+            <span>Logout</span>
+          </button>
+        </>
+      ) : (
+        <>
+          <button
+            onClick={onLogin}
+            className="text-gray-600 hover:text-blue-600 font-medium text-left"
+          >
+            Sign In
+          </button>
+          <button
+            onClick={onSignup}
+            className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
+            Sign Up
+          </button>
+        </>
+      )}
     </div>
   </div>
 );

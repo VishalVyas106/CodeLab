@@ -17,7 +17,7 @@ const TeamPage = () => {
       members: [
         'Vyas Vishal',
         'Krishna Solanki', 
-        'Priyanshu Nager'
+        'Priyanshu Nagar'
       ]
     },
     {
@@ -35,7 +35,7 @@ const TeamPage = () => {
       members: [
         'Vishwa Patel',
         'Lucky Choudhary', 
-        'Tushya Kumar'
+        'Tushya Parmar'
       ]
     },
     {
@@ -43,8 +43,8 @@ const TeamPage = () => {
       icon: <Briefcase className="w-8 h-8 text-red-600" />,
       members: [
         'Krinal Sorathiya',
-        'Aayush Thakker', 
-        'Danesh Choudhary'
+        'Aayush Thakkar', 
+        'Danish Imtiyaz'
       ]
     }
   ];

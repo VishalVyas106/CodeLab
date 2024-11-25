@@ -19,7 +19,7 @@ const features = [
     icon: <Code className="w-12 h-12 text-blue-500" />,
     title: "Code Editor",
     description: "Advanced coding environment with multi-language support.",
-    route: "/code-editor"
+    route: "https://code-editor-seven-iota.vercel.app/"
   },
   {
     icon: <Users className="w-12 h-12 text-blue-500" />,

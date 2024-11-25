@@ -36,7 +36,7 @@ const Footer = () => (
 
       {/* Footer Bottom */}
       <div className="mt-12 border-t border-gray-700 pt-6 text-center text-gray-500 text-sm">
-        <NavLink to="/TeamPage"> The CodeLab Team</NavLink>
+        <NavLink to="/team"> The CodeLab Team</NavLink>
       </div>
     </div>
   </footer>
