@@ -1,7 +1,7 @@
 // src/App.jsx
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import ProtectedRoute from './components/ProtectedRoute';
+// import ProtectedRoute from './components/ProtectedRoute';
 import LandingPage from './pages/LandingPage';
 import SubjectsPage from './pages/SubjectsPage';
 import TeamPage from './pages/TeamPage';
@@ -23,17 +23,17 @@ function App() {
           <Route 
             path="/subjects" 
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <SubjectsPage />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             } 
           />
           <Route 
             path="/team" 
             element={
-              <ProtectedRoute>
+              // <ProtectedRoute>
                 <TeamPage />
-              </ProtectedRoute>
+              // </ProtectedRoute>
             } 
           />
           

@@ -15,6 +15,7 @@ import { useAuth } from '../context/AuthContext';
 import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import FeaturesSection from '../components/FeaturesSection';
+// import { useNavigate } from 'react-router-dom';
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ const LandingPage = () => {
         onDiscoverMore={scrollToFeatures}
       />
       <FeaturesSection />
-      <JoinSection onLogin={login} />
+      <JoinSection onLogin={()=> navigate('/login')} />
       <Footer />
     </div>
   );
